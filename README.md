@@ -32,7 +32,7 @@ try config.addProvider(LingoProvider.Provider.self)
 
 Lingo can be configured in a `lingo.json` file located inside your Vapor `Config` dir:
 
-```json
+```
 {
     "defaultLocale": "en" // A valid locale string like de, en_GB, fr_FR, etc.
     "localizationsDir": "Localizations", // This is also the default value if omitted
