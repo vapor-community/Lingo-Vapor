@@ -41,7 +41,7 @@ public struct Provider: Vapor.Provider {
             throw ConfigError.missing(key: ["defaultLocale"], file: "lingo", desiredType: String.self)
         }
         
-        self.lingo = Lingo(rootPath: rootPath, defaultLocale: defaultLocale)
+        self.lingo = try Lingo(rootPath: rootPath, defaultLocale: defaultLocale)
     }
 
     public func boot(_ droplet: Droplet) throws {
