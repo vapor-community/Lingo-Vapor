@@ -49,6 +49,19 @@ LingoProvider adds an extension on Droplet for easier access to Lingo, so it can
 let localizedTitle = droplet.lingo.localize("welcome.title", locale: "en")
 ```
 
+Use the following syntax for defining localizations in a JSON file:
+
+```swift
+{
+	"title": "Hello Swift!",
+	"greeting.message": "Hi %{full-name}!",
+	"unread.messages": {
+		"one": "You have one unread message.",
+		"other": "You have %{count} unread messages."
+	}
+}
+```
+
 ## Learn more
 
 - [Lingo](https://github.com/miroslavkovac/Lingo) - learn more about the localization file format, pluralization support, and see how you can get the most out of the Lingo.
