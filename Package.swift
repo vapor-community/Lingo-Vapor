@@ -4,6 +4,9 @@ import PackageDescription
 
 let package = Package(
     name: "LingoProvider",
+    products: [
+        .library(name: "LingoProvider", targets: ["LingoProvider"])
+    ],
     dependencies: [
         .package(url: "https://github.com/vapor/vapor.git", from: "3.0.0-rc"),
         .package(url: "https://github.com/miroslavkovac/Lingo.git", from: "3.0.5")
