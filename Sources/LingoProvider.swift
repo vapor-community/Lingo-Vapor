@@ -1,54 +1,30 @@
 import Vapor
-import Lingo
+@_exported import Lingo
 
-extension Droplet {
+extension Lingo: Service {}
 
-    /// Convenience method for accessing Lingo object.
-    ///
-    /// Note that accessing this property might crash the app if the LingoProvider is not added.
-    /// This tradeoff was done on purpose in order to gain a cleaner API (without optionals).
-    public var lingo: Lingo {
-        guard let lingo = self.storage["lingo"] as? Lingo else {
-            fatalError("Lingo is not initialized. Make sure you have registered the provider by doing: `config.addProvider(LingoProvider.Provider.self)`.")
-        }
-        
-        return lingo
+extension Container {
+    public func lingo()throws -> Lingo {
+        return try self.make(Lingo.self)
     }
-
 }
 
-public struct Provider: Vapor.Provider {
+public struct LingoProvider: Vapor.Provider {
+    let root: String
+    let defaultLocale: String
     
-    public let lingo: Lingo
-    public static let repositoryName = "lingo-provider"
-    
-    public init(config: Config) throws {
-        guard let lingo = config["lingo"] else {
-            throw ConfigError.missingFile("lingo")
-        }
+    init(defaultLocale: String) {
+        let dir = DirectoryConfig.detect()
         
-        // Check if `localizationsDir` is specified in the config,
-        // otherwise default to workDir/Localizations
-        let rootPath: String
-        if let localizationsDir = lingo["localizationsDir"]?.string {
-            rootPath = config.workDir.appending(localizationsDir)
-        } else {
-            rootPath = config.workDir.appending("Localizations")
-        }
-        
-        /// Extract the default locale
-        guard let defaultLocale = lingo["defaultLocale"]?.string else {
-            throw ConfigError.missing(key: ["defaultLocale"], file: "lingo", desiredType: String.self)
-        }
-        
-        self.lingo = try Lingo(rootPath: rootPath, defaultLocale: defaultLocale)
+        self.root = dir.workDir + "Localizations"
+        self.defaultLocale = defaultLocale
     }
-
-    public func boot(_ droplet: Droplet) throws {
-        droplet.storage["lingo"] = self.lingo
-    }
-
-    public func boot(_ config: Config) throws { }
-    public func beforeRun(_ droplet: Droplet) throws { }
     
+    public func register(_ services: inout Services) throws {
+        services.register(Lingo.self) { (container) -> (Lingo) in
+            return try Lingo(rootPath: self.root, defaultLocale: self.defaultLocale)
+        }
+    }
+    
+    public func didBoot(_ container: Container) throws -> EventLoopFuture<Void> { return container.eventLoop.newSucceededFuture(result: ()) }
 }
