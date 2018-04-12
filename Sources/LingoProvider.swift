@@ -13,7 +13,7 @@ public struct LingoProvider: Vapor.Provider {
     let root: String
     let defaultLocale: String
     
-    init(defaultLocale: String) {
+    public init(defaultLocale: String) {
         let dir = DirectoryConfig.detect()
         
         self.root = dir.workDir + "Localizations"
