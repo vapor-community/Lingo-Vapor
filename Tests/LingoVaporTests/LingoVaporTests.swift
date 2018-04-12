@@ -1,8 +1,8 @@
 import Vapor
 import XCTest
-@testable import LingoProvider
+@testable import LingoVapor
 
-class LingoProviderTests: XCTestCase {
+class LingoVaporTests: XCTestCase {
 
     func testInitialization() throws {
         var config = try Config()

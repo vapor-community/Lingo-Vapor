@@ -1,6 +1,6 @@
 import XCTest
-@testable import LingoProviderTests
+@testable import LingoVaporTests
 
 XCTMain([
-    testCase(LingoProviderTests.allTests),
+    testCase(LingoVaporTests.allTests),
 ])
