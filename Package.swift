@@ -8,7 +8,7 @@ let package = Package(
         .library(name: "LingoVapor", targets: ["LingoVapor"])
     ],
     dependencies: [
-        .package(url: "https://github.com/vapor/vapor.git", from: "3.0.0-rc"),
+        .package(url: "https://github.com/vapor/vapor.git", from: "3.0.0"),
         .package(url: "https://github.com/miroslavkovac/Lingo.git", from: "3.0.5")
     ],
     targets: [
