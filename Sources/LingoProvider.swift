@@ -4,7 +4,7 @@ import Vapor
 extension Lingo: Service {}
 
 extension Container {
-    public func lingo()throws -> Lingo {
+    public func lingo() throws -> Lingo {
         return try self.make(Lingo.self)
     }
 }
