@@ -1,6 +1,5 @@
 # Lingo Provider
 
-[![Language](https://img.shields.io/badge/Swift-3.2-brightgreen.svg)](http://swift.org)
 [![Language](https://img.shields.io/badge/Swift-4-brightgreen.svg)](http://swift.org)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/vapor-community/markdown-provider/master/LICENSE)
 
@@ -15,39 +14,34 @@ Add LingoProvider as a dependancy in your `Package.swift` file:
 ```swift
 dependencies: [
 	...,
-	.Package(url: "https://github.com/vapor-community/lingo-provider.git", majorVersion: 1)]
+	.Package(url: "https://github.com/vapor-community/lingo-provider.git", majorVersion: 3)]
 ]
 ```
 
 ### Add the Provider
 
-After you have initialized the `Config` object, simply add the provider:
+In the `configure.swift` simply initialize the `LingoVapor` with a default locale:
 
 ```swift
-import LingoProvider
+import LingoVapor
 ...
-try config.addProvider(LingoProvider.Provider.self)
-```
-
-### Config
-
-Lingo can be configured in a `lingo.json` file located inside your Vapor `Config` dir:
-
-```json
-{
-    "defaultLocale": "en",
-    "localizationsDir": "Localizations"
+public func configure(_ config: inout Config, _ env: inout Environment, _ services: inout Services) throws {
+	...
+	let lingoProvider = LingoProvider(defaultLocale: "en", localizationsDir: "Localizations")
+	try services.register(lingoProvider)
 }
 ```
 
-> The `localizationsDir` can be omitted in this case, as the _Localizations_ is also the default path. Note that this folder should exist under the _drop.workDir_.
+> The `localizationsDir` can be omitted, as the _Localizations_ is also the default path. Note that this folder should exist under the _workDir_.
 
 ## Use
 
-LingoProvider adds an extension on Droplet for easier access to Lingo, so it can be used simply as:
+After you have registered the provider, you can use any `Container` to create `Lingo`:
 
 ```swift
-let localizedTitle = droplet.lingo.localize("welcome.title", locale: "en")
+let lingo = try someContainer.make(Lingo.self)
+...
+let localizedTitle = lingo.localize("welcome.title", locale: "en")
 ```
 
 Use the following syntax for defining localizations in a JSON file:

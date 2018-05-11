@@ -16,9 +16,9 @@ public struct LingoProvider: Vapor.Provider {
     let defaultLocale: String
     let rootPath: String
     
-    public init(defaultLocale: String, directory: String = "Localizations") {
+    public init(defaultLocale: String, localizationsDir: String = "Localizations") {
         self.defaultLocale = defaultLocale
-        self.rootPath = DirectoryConfig.detect().workDir + directory
+        self.rootPath = DirectoryConfig.detect().workDir + localizationsDir
     }
     
     public func register(_ services: inout Services) throws {

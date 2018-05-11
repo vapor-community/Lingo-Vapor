@@ -5,7 +5,7 @@ import XCTest
 class LingoVaporTests: XCTestCase {
 
     func testInitialization() throws {
-        let lingoProvider = LingoProvider(defaultLocale: "en")
+        let lingoProvider = LingoProvider(defaultLocale: "en", localizationsDir: "Localizations")
         XCTAssertEqual(lingoProvider.defaultLocale, "en")
     }
     
