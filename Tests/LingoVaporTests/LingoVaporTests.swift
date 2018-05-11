@@ -5,17 +5,11 @@ import XCTest
 class LingoVaporTests: XCTestCase {
 
     func testInitialization() throws {
-        var config = try Config()
-        try config.set("lingo.localizationsDir", "/")
-        try config.set("lingo.defaultLocale", "en")
-        try config.addProvider(LingoProvider.Provider.self)
-        
-        let drop = try Droplet(config)
-        
-        XCTAssertEqual(drop.lingo.defaultLocale, "en")
+        let lingoProvider = LingoProvider(defaultLocale: "en")
+        XCTAssertEqual(lingoProvider.defaultLocale, "en")
     }
     
-    static var allTests: [(String, (LingoProviderTests) -> () throws -> Void)] = [
+    static var allTests: [(String, (LingoVaporTests) -> () throws -> Void)] = [
         ("testInitialization", testInitialization),
     ]
     
