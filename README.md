@@ -14,7 +14,7 @@ Add LingoProvider as a dependancy in your `Package.swift` file:
 ```swift
 dependencies: [
 	...,
-	.Package(url: "https://github.com/vapor-community/lingo-provider.git", majorVersion: 3)]
+	.package(url: "https://github.com/vapor-community/lingo-vapor.git", from: "3.0.0")]
 ]
 ```
 
