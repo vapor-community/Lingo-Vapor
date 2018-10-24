@@ -44,6 +44,20 @@ let lingo = try someContainer.make(Lingo.self)
 let localizedTitle = lingo.localize("welcome.title", locale: "en")
 ```
 
+To get the locale of a user out of the request, you can use `request.locale`. This uses a language, which is in the HTTP header and which is in your available locales, if that exists. Otherwise it falls back to the default locale. Now you can use different locales dynamically:
+
+```swift
+let localizedTitle = lingo.localize("welcome.title", locale: request.locale)
+```
+
+When overwriting the requested locale, just write the new locale into the session, e.g. like that:
+
+```swift
+if let session = try? session() {
+    session["locale"] = locale
+}
+```
+
 Use the following syntax for defining localizations in a JSON file:
 
 ```swift
