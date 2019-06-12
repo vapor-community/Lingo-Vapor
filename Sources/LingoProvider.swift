@@ -14,16 +14,19 @@ extension Container {
 public struct LingoProvider: Vapor.Provider {
     
     let defaultLocale: String
-    let rootPath: String
+    let localizationsDir: String
     
     public init(defaultLocale: String, localizationsDir: String = "Localizations") {
         self.defaultLocale = defaultLocale
-        self.rootPath = DirectoryConfig.detect().workDir + localizationsDir
+        self.localizationsDir = localizationsDir
     }
     
     public func register(_ services: inout Services) throws {
         services.register(Lingo.self) { (container) -> (Lingo) in
-            return try Lingo(rootPath: self.rootPath, defaultLocale: self.defaultLocale)
+            let dirConfig = try container.make(DirectoryConfig.self)
+            let workDir = dirConfig.workDir.hasSuffix("/") ? dirConfig.workDir : dirConfig.workDir + "/"
+            let rootPath = workDir + self.localizationsDir
+            return try Lingo(rootPath: rootPath, defaultLocale: self.defaultLocale)
         }
     }
     
