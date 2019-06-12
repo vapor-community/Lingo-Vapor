@@ -23,7 +23,7 @@ public struct LingoProvider: Vapor.Provider {
     
     public func register(_ services: inout Services) throws {
         services.register(Lingo.self) { (container) -> (Lingo) in
-            let dirConfig = container.make(DirectoryConfig.self)
+            let dirConfig = try container.make(DirectoryConfig.self)
             let rootPath = dirConfig.workDir + self.localizationsDir
             return try Lingo(rootPath: rootPath, defaultLocale: self.defaultLocale)
         }
