@@ -24,7 +24,8 @@ public struct LingoProvider: Vapor.Provider {
     public func register(_ services: inout Services) throws {
         services.register(Lingo.self) { (container) -> (Lingo) in
             let dirConfig = try container.make(DirectoryConfig.self)
-            let rootPath = dirConfig.workDir + self.localizationsDir
+            let workDir = dirConfig.workDir.hasSuffix("/") ? dirConfig.workDir : dirConfig.workDir + "/"
+            let rootPath = workDir + self.localizationsDir
             return try Lingo(rootPath: rootPath, defaultLocale: self.defaultLocale)
         }
     }
