@@ -2,7 +2,7 @@ import Vapor
 import Lingo
 
 extension Application {
-    var lingoVapor: LingoProvider {
+    public var lingoVapor: LingoProvider {
         .init(application: self)
     }
 }
