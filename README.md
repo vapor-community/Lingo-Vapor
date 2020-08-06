@@ -14,8 +14,11 @@ Add LingoProvider as a dependancy in your `Package.swift` file:
 ```swift
 dependencies: [
 	...,
-	.package(url: "https://github.com/vapor-community/lingo-vapor.git", from: "4.0.0")]
-]
+	.package(name: "LingoVapor", url: "https://github.com/vapor-community/lingo-vapor.git", from: "4.0.0")]
+],
+targets: [
+    .target(name: "App", dependencies: [
+        .product(name: "LingoVapor", package: "LingoVapor")
 ```
 
 ### Add the Provider
