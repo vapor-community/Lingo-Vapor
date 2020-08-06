@@ -29,7 +29,7 @@ extension LingoProvider {
     
     public var configuration: LingoConfiguration? {
         get { application.storage[ConfigurationKey.self] }
-        set { application.storage[ConfigurationKey.self] = newValue }
+        nonmutating set { application.storage[ConfigurationKey.self] = newValue }
     }
 }
 
