@@ -1,37 +1,45 @@
 import Vapor
 import Lingo
 
-extension Lingo: Service {}
-
-extension Container {
-    
-    public func lingo() throws -> Lingo {
-        return try self.make(Lingo.self)
+extension Application {
+    public var lingoVapor: LingoProvider {
+        .init(application: self)
     }
-    
 }
 
-public struct LingoProvider: Vapor.Provider {
+public struct LingoProvider {
+    let application: Application
     
-    let defaultLocale: String
-    let localizationsDir: String
+    public init(application: Application) {
+        self.application = application
+    }
+    
+    public func lingo() throws -> Lingo {
+        let directory = DirectoryConfiguration.detect().workingDirectory
+        let workDir = directory.hasSuffix("/") ? directory : directory + "/"
+        let rootPath = workDir + (configuration?.localizationsDir ?? "")
+        return try Lingo(rootPath: rootPath, defaultLocale: (configuration?.defaultLocale ?? ""))
+    }
+}
+
+extension LingoProvider {
+    struct ConfigurationKey: StorageKey {
+        typealias Value = LingoConfiguration
+    }
+    
+    public var configuration: LingoConfiguration? {
+        get { application.storage[ConfigurationKey.self] }
+        nonmutating set { application.storage[ConfigurationKey.self] = newValue }
+    }
+}
+
+public struct LingoConfiguration {
+    let defaultLocale, localizationsDir: String
     
     public init(defaultLocale: String, localizationsDir: String = "Localizations") {
         self.defaultLocale = defaultLocale
         self.localizationsDir = localizationsDir
     }
-    
-    public func register(_ services: inout Services) throws {
-        services.register(Lingo.self) { (container) -> (Lingo) in
-            let dirConfig = try container.make(DirectoryConfig.self)
-            let workDir = dirConfig.workDir.hasSuffix("/") ? dirConfig.workDir : dirConfig.workDir + "/"
-            let rootPath = workDir + self.localizationsDir
-            return try Lingo(rootPath: rootPath, defaultLocale: self.defaultLocale)
-        }
-    }
-    
-    public func didBoot(_ container: Container) throws -> EventLoopFuture<Void> {
-        return container.eventLoop.newSucceededFuture(result: ())
-    }
-    
 }
+
+

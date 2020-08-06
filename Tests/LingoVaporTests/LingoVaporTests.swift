@@ -5,8 +5,9 @@ import XCTest
 class LingoVaporTests: XCTestCase {
 
     func testInitialization() throws {
-        let lingoProvider = LingoProvider(defaultLocale: "en", localizationsDir: "Localizations")
-        XCTAssertEqual(lingoProvider.defaultLocale, "en")
+        var lingoProvider = LingoProvider(application: Application())
+        lingoProvider.configuration = .init(defaultLocale: "en", localizationsDir: "Localizations")
+        XCTAssertEqual(lingoProvider.configuration?.defaultLocale, "en")
     }
     
     static var allTests: [(String, (LingoVaporTests) -> () throws -> Void)] = [

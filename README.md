@@ -14,8 +14,11 @@ Add LingoProvider as a dependancy in your `Package.swift` file:
 ```swift
 dependencies: [
 	...,
-	.package(url: "https://github.com/vapor-community/lingo-vapor.git", from: "3.0.0")]
-]
+	.package(name: "LingoVapor", url: "https://github.com/vapor-community/lingo-vapor.git", from: "4.0.0")]
+],
+targets: [
+    .target(name: "App", dependencies: [
+        .product(name: "LingoVapor", package: "LingoVapor")
 ```
 
 ### Add the Provider
@@ -25,10 +28,9 @@ In the `configure.swift` simply initialize the `LingoVapor` with a default local
 ```swift
 import LingoVapor
 ...
-public func configure(_ config: inout Config, _ env: inout Environment, _ services: inout Services) throws {
+public func configure(_ app: Application) throws {
 	...
-	let lingoProvider = LingoProvider(defaultLocale: "en", localizationsDir: "Localizations")
-	try services.register(lingoProvider)
+	app.lingoVapor.configuration = .init(defaultLocale: "en", localizationsDir: "Localizations")
 }
 ```
 
@@ -36,10 +38,10 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
 
 ## Use
 
-After you have registered the provider, you can use any `Container` to create `Lingo`:
+After you have configured the provider, you can use  `lingoVapor` service to create `Lingo`:
 
 ```swift
-let lingo = try someContainer.make(Lingo.self)
+let lingo = try app.lingoVapor.lingo()
 ...
 let localizedTitle = lingo.localize("welcome.title", locale: "en")
 ```
