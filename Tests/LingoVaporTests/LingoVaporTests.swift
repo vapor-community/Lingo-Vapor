@@ -4,8 +4,20 @@ import XCTest
 
 class LingoVaporTests: XCTestCase {
 
+    private var application: Application!
+
+    override func setUp() {
+        super.setUp()
+        self.application = Application()
+    }
+
+    override func tearDown() {
+        self.application.shutdown()
+        super.tearDown()
+    }
+
     func testInitialization() throws {
-        var lingoProvider = LingoProvider(application: Application())
+        let lingoProvider = LingoProvider(application: self.application)
         lingoProvider.configuration = .init(defaultLocale: "en", localizationsDir: "Localizations")
         XCTAssertEqual(lingoProvider.configuration?.defaultLocale, "en")
     }

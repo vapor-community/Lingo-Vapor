@@ -1,6 +1,6 @@
 # Lingo Provider
 
-[![Language](https://img.shields.io/badge/Swift-4-brightgreen.svg)](http://swift.org)
+[![Language](https://img.shields.io/badge/Swift-5-brightgreen.svg)](http://swift.org)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/vapor-community/markdown-provider/master/LICENSE)
 
 A Vapor provider for [Lingo](https://github.com/miroslavkovac/Lingo) - a pure Swift localization library ready to be used in Server Side Swift projects.
