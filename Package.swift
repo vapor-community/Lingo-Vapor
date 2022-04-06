@@ -12,7 +12,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/vapor/vapor.git", from: "4.27.0"),
-        .package(url: "https://github.com/miroslavkovac/Lingo.git", from: "3.1.0")
+        .package(url: "https://github.com/miroslavkovac/Lingo.git", from: "4.0.0")
     ],
     targets: [
         .target(name: "LingoVapor", dependencies: [

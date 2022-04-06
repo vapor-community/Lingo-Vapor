@@ -14,12 +14,18 @@ Add LingoProvider as a dependancy in your `Package.swift` file:
 ```swift
 dependencies: [
 	...,
-	.package(name: "LingoVapor", url: "https://github.com/vapor-community/lingo-vapor.git", from: "4.0.0")]
+	.package(name: "LingoVapor", url: "https://github.com/vapor-community/lingo-vapor.git", from: "4.2.0")]
 ],
 targets: [
     .target(name: "App", dependencies: [
         .product(name: "LingoVapor", package: "LingoVapor")
 ```
+
+### Upgrading from version 4.1.0 to version 4.2.0
+
+The version 4.1.0 uses the new version of [Lingo](https://github.com/miroslavkovac/Lingo) where the format of locale identifiers was changed to match [RFC 5646](https://datatracker.ietf.org/doc/html/rfc5646). Prior to 4.2.0 `_` was used to separate _language code_ and _country code_ in the locale identifier, and now the library uses `-` as per RFC. 
+
+If you were using any locales which include a country code, you would need to rename related translation files to match the new format.    
 
 ### Add the Provider
 
