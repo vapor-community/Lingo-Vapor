@@ -52,6 +52,18 @@ let lingo = try app.lingoVapor.lingo()
 let localizedTitle = lingo.localize("welcome.title", locale: "en")
 ```
 
+To get the locale of a user out of the request, you can use `request.locale`. This uses a language, which is in the HTTP header and which is in your available locales, if that exists. Otherwise it falls back to the default locale. Now you can use different locales dynamically:
+
+```swift
+let localizedTitle = lingo.localize("welcome.title", locale: request.locale)
+```
+
+When overwriting the requested locale, just write the new locale into the session, e.g. like that:
+
+```swift
+session.data["locale"] = locale
+```
+
 Use the following syntax for defining localizations in a JSON file:
 
 ```swift
@@ -63,6 +75,25 @@ Use the following syntax for defining localizations in a JSON file:
 		"other": "You have %{count} unread messages."
 	}
 }
+```
+
+### Inside Leaf templates
+
+When using [Leaf](https://github.com/vapor/leaf) as templating engine, you can use `LocalizeTag` from `LingoVaporLeaf` for localization inside the templates.
+
+Add in `configure.swift`:
+```swift
+import LingoVaporLeaf
+
+// Inside `configure(_ app: Application)`:
+app.leaf.tags["localize"] = LocalizeTag()
+```
+
+Afterwards you can call it inside the Leaf templates:
+
+```
+#localize("thisisthelingokey")
+#localize("lingokeywithvariable", "{\"foo\":\"bar\"}")
 ```
 
 ## Learn more
