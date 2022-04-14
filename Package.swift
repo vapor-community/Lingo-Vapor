@@ -12,13 +12,18 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/vapor/vapor.git", from: "4.27.0"),
+        .package(url: "https://github.com/vapor/leaf.git", from: "4.0.0"),
         .package(url: "https://github.com/miroslavkovac/Lingo.git", from: "4.0.0")
     ],
     targets: [
         .target(name: "LingoVapor", dependencies: [
             .product(name: "Vapor", package: "vapor"),
             .product(name: "Lingo", package: "Lingo")
-        ], path: "Sources/"),
+        ]),
+        .target(name: "LingoVaporLeaf", dependencies: [
+            .target(name: "LingoVapor"),
+            .product(name: "Leaf", package: "leaf")
+        ]),
         .testTarget(name: "LingoVaporTests", dependencies: [
             .target(name: "LingoVapor")
         ])
