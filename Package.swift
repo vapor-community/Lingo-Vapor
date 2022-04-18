@@ -8,7 +8,8 @@ let package = Package(
        .macOS(.v10_15)
     ],
     products: [
-        .library(name: "LingoVapor", targets: ["LingoVapor"])
+        .library(name: "LingoVapor", targets: ["LingoVapor"]),
+        .library(name: "LingoVaporLeaf", targets: ["LingoVaporLeaf"])
     ],
     dependencies: [
         .package(url: "https://github.com/vapor/vapor.git", from: "4.27.0"),
