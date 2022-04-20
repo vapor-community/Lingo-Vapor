@@ -2,7 +2,7 @@ import Vapor
 import Leaf
 import LingoVapor
 
-public final class LangLinksTag: UnsafeUnescapedLeafTag {
+public final class LocaleLinksTag: UnsafeUnescapedLeafTag {
     public init() {}
     public func render(_ tag: LeafContext) throws -> LeafData {
         guard let lingo = try tag.application?.lingoVapor.lingo()
