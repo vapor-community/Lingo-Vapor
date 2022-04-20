@@ -116,7 +116,7 @@ app.leaf.tags["localeLinks"] = LocaleLinksTag()
 
 Afterwards you can call them inside the Leaf templates:
 
-```
+```html
 <!-- String localization -->
 #localize("thisisthelingokey")
 #localize("lingokeywithvariable", "{\"foo\":\"bar\"}")
