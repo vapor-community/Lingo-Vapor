@@ -1,6 +1,6 @@
 import Vapor
 
-public final class LocaleRedirectMiddelware: Middleware {
+public final class LocaleRedirectMiddleware: Middleware {
     public init() {}
     public func respond(to request: Request, chainingTo next: Responder) -> EventLoopFuture<Response> {
         // Check if a language is passed in url
