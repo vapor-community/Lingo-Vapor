@@ -79,14 +79,14 @@ Use the following syntax for defining localizations in a JSON file:
 
 ### Locale redirection middleware
 
-In case you want to serv different locales on different subfolders, you can use the `LocaleRedirectMiddelware`.
+In case you want to serv different locales on different subfolders, you can use the `LocaleRedirectMiddleware`.
 
 Add in `configure.swift`:
 ```swift
 import LingoVapor
 
 // Inside `configure(_ app: Application)`:
-app.middleware.use(LocaleRedirectMiddelware())
+app.middleware.use(LocaleRedirectMiddleware())
 ```
 
 Add in `routes.swift`:
