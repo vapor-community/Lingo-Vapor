@@ -26,4 +26,4 @@ public final class LocalizeTag: LeafTag {
             return .string(lingo.localize(key, locale: locale))
         }
     }
- }
+}
