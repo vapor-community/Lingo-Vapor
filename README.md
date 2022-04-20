@@ -44,7 +44,7 @@ public func configure(_ app: Application) throws {
 
 ## Use
 
-After you have configured the provider, you can use  `lingoVapor` service to create `Lingo`:
+After you have configured the provider, you can use `lingoVapor` service to create `Lingo`:
 
 ```swift
 let lingo = try app.lingoVapor.lingo()
@@ -77,9 +77,32 @@ Use the following syntax for defining localizations in a JSON file:
 }
 ```
 
+### Locale redirection middleware
+
+In case you want to serv different locales on different subfolders, you can use the `LocaleRedirectMiddelware`.
+
+Add in `configure.swift`:
+```swift
+import LingoVapor
+
+// Inside `configure(_ app: Application)`:
+app.middleware.use(LocaleRedirectMiddelware())
+```
+
+Add in `routes.swift`:
+```swift
+import LingoVapor
+
+// Inside `routes(_ app: Application)`:
+app.get("home") { /* ... */ }
+app.get(":locale", "home") { /* ... */ } // For each route, add the one prefixed by the `locale` parameter
+```
+
+That way, going to `/home/` will redirect you to `/<locale>/home/` (with `<locale>` corresponding to your browser locale), and going to `/fr/home/` will display homepage in french whatever the browser locale is.
+
 ### Inside Leaf templates
 
-When using [Leaf](https://github.com/vapor/leaf) as templating engine, you can use `LocalizeTag` from `LingoVaporLeaf` for localization inside the templates.
+When using [Leaf](https://github.com/vapor/leaf) as templating engine, you can use `LocalizeTag`, `LocaleTag` and `LocaleLinksTag` from `LingoVaporLeaf` for localization inside the templates.
 
 Add in `configure.swift`:
 ```swift
@@ -87,13 +110,22 @@ import LingoVaporLeaf
 
 // Inside `configure(_ app: Application)`:
 app.leaf.tags["localize"] = LocalizeTag()
+app.leaf.tags["locale"] = LocaleTag()
+app.leaf.tags["localeLinks"] = LocaleLinksTag()
 ```
 
-Afterwards you can call it inside the Leaf templates:
+Afterwards you can call them inside the Leaf templates:
 
 ```
+<!-- String localization -->
 #localize("thisisthelingokey")
 #localize("lingokeywithvariable", "{\"foo\":\"bar\"}")
+
+<!-- Get current locale -->
+<html lang="#locale()">
+
+<!-- Generate link canonical and alternate tags -->
+#localeLinks("http://example.com/", "/canonical/path/")
 ```
 
 ## Learn more
